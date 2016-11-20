@@ -13,7 +13,7 @@ For ($i=0; $i -le 9; $i++) {
     java -cp weka.jar weka.filters.unsupervised.instance.RemoveFolds -i "$input_path\opt$i\opt$i.arff" -o "$input_path\opt$i\opt$i-train2.arff" -c last -N 2 -F 1
 
     Write-Host "Performing attribute selection on the resulting file..."
-    java -cp weka.jar weka.attributeSelection.CorrelationAttributeEval -s "weka.attributeSelection.Ranker -N $n_attributes" -i "$input_path\opt$i\opt$i-train2.arff" > "$output_path\step 4\opt$i-train-rank.txt"
+    java -cp weka.jar weka.attributeSelection.CorrelationAttributeEval -s "weka.attributeSelection.Ranker -N ${n_attributes}" -i "$input_path\opt$i\opt$i-train2.arff" > "$output_path\step 4\opt$i-train-rank.txt"
 
     $regex = "\b\d{1,3}\,\d{1,3}\b"
     $attributes2 = Select-String -Path "$output_path\step 4\opt$i-train-rank.txt" -Pattern $regex | % { $_.Matches } | % { $_.Value }
