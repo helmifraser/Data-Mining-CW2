@@ -1,0 +1,18 @@
+
+
+=== Attribute Selection on all input data ===
+
+Search Method:
+	Attribute ranking.
+
+Attribute Evaluator (supervised, Class (nominal): 65 class):
+	Correlation Ranking Filter
+Ranked attributes:
+ 0.56     37 37
+ 0.501    29 29
+ 0.444    36 36
+ 0.428    28 28
+ 0.414    39 39
+
+Selected attributes: 37,29,36,28,39 : 5
+
