@@ -22,11 +22,14 @@ For ($i=0; $i -le 10; $i++) {
     if ($i -ge 0 -and $i -le 9) {
         Write-Host "Performing EM clustering for opt${i}..."
         java -cp weka.jar weka.clusterers.EM -t "$input_path\opt$i\opt$i - normalized.arff" -I 100 -N $min_clusters -X $cv_folds -max $max_clusters -ll-cv $ll_cv -ll-iter $ll_iter -M $min_std -K $k_runs -num-slots 1 -S 100 -c last > "$output_path\step 8\opt${i} - EM.txt"
+        java -cp weka.jar weka.filters.unsupervised.attribute.AddCluster -i "$input_path\opt${i}\opt${i} - normalized.arff" -o "$input_path\optall\opt${i} - clusteredEM.arff" -W "weka.clusterers.EM -N $min_clusters" 
+
     }
 
     else {
         Write-Host "Performing EM clustering for optall..."
         java -cp weka.jar weka.clusterers.EM -t "$input_path\optall\optall - normalized.arff" -I 100 -N $min_clusters_2 -X $cv_folds -max $max_clusters_2 -ll-cv $ll_cv -ll-iter $ll_iter -M $min_std -K $k_runs -num-slots 1 -S 100 -c last > "$output_path\step 8\optall - EM.txt"
+        java -cp weka.jar weka.filters.unsupervised.attribute.AddCluster -i "$input_path\optall\optall - normalized.arff" -o "$input_path\optall\optall - clusteredEM.arff" -W "weka.clusterers.EM -N $min_clusters_2"
     }
 
     }

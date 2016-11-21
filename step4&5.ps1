@@ -10,10 +10,10 @@ For ($i=0; $i -le 9; $i++) {
     Write-Host "Performing steps 4 and 5 on opt${i}:-"
 
     Write-Host "Splitting opt$i in 2 and saving the first half..."
-    java -cp weka.jar weka.filters.unsupervised.instance.RemoveFolds -i "$input_path\opt$i\opt$i.arff" -o "$input_path\opt$i\opt$i-train2.arff" -c last -N 2 -F 1
+    java -cp weka.jar weka.filters.unsupervised.instance.RemoveFolds -i "$input_path\opt$i\opt$i.arff" -o "$input_path\opt$i\opt$i-train.arff" -c last -N 2 -F 1
 
     Write-Host "Performing attribute selection on the resulting file..."
-    java -cp weka.jar weka.attributeSelection.CorrelationAttributeEval -s "weka.attributeSelection.Ranker -N ${n_attributes}" -i "$input_path\opt$i\opt$i-train2.arff" > "$output_path\step 4\opt$i-train-rank.txt"
+    java -cp weka.jar weka.attributeSelection.CorrelationAttributeEval -s "weka.attributeSelection.Ranker -N ${n_attributes}" -i "$input_path\opt$i\opt$i-train.arff" > "$output_path\step 4\opt$i-train-rank.txt"
 
     $regex = "\b\d{1,3}\,\d{1,3}\b"
     $attributes2 = Select-String -Path "$output_path\step 4\opt$i-train-rank.txt" -Pattern $regex | % { $_.Matches } | % { $_.Value }
@@ -40,11 +40,11 @@ For ($i=0; $i -le 9; $i++) {
     Write-Host "Performing NaiveBayes on opt${i}:"
 
     Write-Host "Top 2 for $i..."
-    java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i-top22.arff" > "$output_path\step 5\opt$i-top2.txt"
+    java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i-top2.arff" > "$output_path\step 5\opt$i-top2.txt"
     Write-Host "Top 3 for $i..."
-    java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i-top32.arff" > "$output_path\step 5\opt$i-top3.txt"
+    java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i-top3.arff" > "$output_path\step 5\opt$i-top3.txt"
     Write-Host "Top 5 for $i..."
-    java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i-top52.arff" > "$output_path\step 5\opt$i-top5.txt"
+    java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i-top5.arff" > "$output_path\step 5\opt$i-top5.txt"
     Write-Host "All for $i..." 
     java -cp weka.jar weka.classifiers.bayes.NaiveBayes -t "$input_path\opt$i\opt$i.arff" > "$output_path\step 5\opt${i}.txt"
 
